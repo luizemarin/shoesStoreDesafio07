@@ -39,6 +39,7 @@ class Home extends Component {
     }
 
     handleAddProduct = id => {
+        // eslint-disable-next-line react/prop-types
         const { addToCartRequest } = this.props;
 
         addToCartRequest(id);
@@ -46,6 +47,7 @@ class Home extends Component {
 
     render() {
         const { products } = this.state;
+        // eslint-disable-next-line react/prop-types
         const { amount } = this.props;
 
         return (
@@ -68,7 +70,9 @@ class Home extends Component {
                                     size={24}
                                     color="#fdfcfc"
                                 />
-                                <ProductAmountQtd>0</ProductAmountQtd>
+                                <ProductAmountQtd>
+                                    {amount[product.id] || 0}
+                                </ProductAmountQtd>
                             </ProductAmount>
                             <CartButtonText>
                                 ADICIONAR AO CARRINHO
