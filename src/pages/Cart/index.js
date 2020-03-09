@@ -1,5 +1,12 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import { formatPrice } from '../../util/format';
+import * as CartActions from '../../store/modules/cart/actions';
 
 import {
     Container,
@@ -8,6 +15,7 @@ import {
     ProductImage,
     ProductDetails,
     ProductInfo,
+    ProductDesc,
     ProductPrice,
     RemoveProduct,
     ProductAmountValue,
@@ -22,33 +30,67 @@ import {
     ButtonCheckoutText,
 } from './style';
 
-export default function Cart() {
+function Cart({
+    navigation,
+    cart,
+    total,
+    removeFromCart,
+    updateAmountRequest,
+}) {
+    function increment(product) {
+        updateAmountRequest(product.id, product.amount + 1);
+    }
+
+    function decrement(product) {
+        updateAmountRequest(product.id, product.amount - 1);
+    }
+
     return (
         <Container>
             <ProductList>
-                <Product>
-                    <ProductImage />
-                    <ProductDetails>
-                        <ProductInfo>Tenis legal</ProductInfo>
-                        <ProductPrice>R$ 129,90</ProductPrice>
-                    </ProductDetails>
-                    <RemoveProduct>
-                        <Icon />
-                    </RemoveProduct>
-                    <ProductAmountValue>
-                        <RemoveItem>
-                            <Icon />
-                        </RemoveItem>
-                        <ProductAmount />1
-                        <AddItem>
-                            <Icon />
-                        </AddItem>
-                        <TotalItem>R$ 129,90</TotalItem>
-                    </ProductAmountValue>
-                </Product>
+                {cart.map(product => (
+                    <Product key={product.id}>
+                        <ProductInfo>
+                            <ProductImage source={{ uri: product.image }} />
+                            <ProductDetails>
+                                <ProductDesc>{product.title}</ProductDesc>
+                                <ProductPrice>
+                                    {product.priceFormatted}
+                                </ProductPrice>
+                            </ProductDetails>
+                            <RemoveProduct
+                                onPress={() => removeFromCart(product.id)}
+                            >
+                                <Icons
+                                    name="trash-can"
+                                    size={26}
+                                    color="#7159c1"
+                                />
+                            </RemoveProduct>
+                        </ProductInfo>
+                        <ProductAmountValue>
+                            <RemoveItem onPress={() => decrement(product)}>
+                                <Icon
+                                    name="remove-circle-outline"
+                                    size={18}
+                                    color="#7159c1"
+                                />
+                            </RemoveItem>
+                            <ProductAmount value={product.amount} />
+                            <AddItem onPress={() => increment(product)}>
+                                <Icon
+                                    name="add-circle-outline"
+                                    size={18}
+                                    color="#7159c1"
+                                />
+                            </AddItem>
+                            <TotalItem>{product.subtotal}</TotalItem>
+                        </ProductAmountValue>
+                    </Product>
+                ))}
                 <TotalProduct>
                     <TotalText>Total</TotalText>
-                    <TotalAmount>R$ 129,90</TotalAmount>
+                    <TotalAmount>{total}</TotalAmount>
                     <ButtonCheckout>
                         <ButtonCheckoutText>
                             Finalizar Pedido
@@ -59,3 +101,20 @@ export default function Cart() {
         </Container>
     );
 }
+
+const mapStateToProps = state => ({
+    cart: state.cart.map(product => ({
+        ...product,
+        subtotal: formatPrice(product.price * product.amount),
+    })),
+    total: formatPrice(
+        state.cart.reduce((total, product) => {
+            return total + product.price * product.amount;
+        }, 0)
+    ),
+});
+
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(CartActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

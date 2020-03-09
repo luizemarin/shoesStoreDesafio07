@@ -1,38 +1,121 @@
 import styled from 'styled-components';
 import { RectButton } from 'react-native-gesture-handler';
 
-export const Container = styled.View``;
+export const Container = styled.View`
+    background-color: #191920;
+    flex: 1;
+`;
 
-export const Product = styled.View``;
+export const ProductList = styled.View`
+    background-color: #ffffff;
+    margin: 0 15px;
+    border-radius: 4px;
+`;
 
-export const ProductList = styled.View``;
+export const Product = styled.View`
+    margin: 10px;
+`;
 
-export const ProductImage = styled.Image``;
+export const ProductImage = styled.Image`
+    width: 70px;
+    height: 70px;
+`;
 
-export const ProductDetails = styled.View``;
+export const ProductInfo = styled.View`
+    display: flex;
+    margin: 10px;
+    flex-direction: row;
+`;
 
-export const ProductInfo = styled.Text``;
+export const ProductDetails = styled.View`
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin-left: 5px;
+`;
 
-export const ProductPrice = styled.Text``;
+export const ProductDesc = styled.Text`
+    font-size: 14px;
+    max-width: 210px;
+`;
 
-export const RemoveProduct = styled.View``;
+export const ProductPrice = styled.Text`
+    margin-top: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 5px;
+`;
 
-export const ProductAmountValue = styled.Text``;
+export const RemoveProduct = styled.TouchableOpacity`
+    margin-left: auto;
+`;
 
-export const RemoveItem = styled.View``;
+export const ProductAmountValue = styled.View`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #eee;
+    border-radius: 4px;
+    padding: 5px;
+    flex-wrap: wrap;
+`;
 
-export const ProductAmount = styled.Text``;
+export const RemoveItem = styled.TouchableOpacity`
+    margin-left: 10px;
+`;
 
-export const AddItem = styled.View``;
+export const ProductAmount = styled.Text`
+    background-color: #ffffff;
+    height: 95%;
+    width: 30px;
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-color: #ddd;
+    border-width: 1px;
+    padding: 5px;
+`;
 
-export const TotalItem = styled.Text``;
+export const AddItem = styled.TouchableOpacity`
+    margin-right: 15px;
+`;
 
-export const TotalProduct = styled.View``;
+export const TotalItem = styled.Text`
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: 130px;
+`;
 
-export const TotalText = styled.Text``;
+export const TotalProduct = styled.View`
+    display: flex;
+    align-items: center;
+    margin: 10px;
+`;
 
-export const TotalAmount = styled.Text``;
+export const TotalText = styled.Text`
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 16px;
+    color: #999;
+`;
 
-export const ButtonCheckout = styled(RectButton)``;
+export const TotalAmount = styled.Text`
+    font-size: 30px;
+    font-weight: bold;
+    color: #000;
+`;
 
-export const ButtonCheckoutText = styled.Text``;
+export const ButtonCheckout = styled(RectButton)`
+    width: 95%;
+    margin-top: 20px;
+    background-color: #7159c1;
+    border-radius: 4px;
+`;
+
+export const ButtonCheckoutText = styled.Text`
+    padding: 15px 0;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+`;
